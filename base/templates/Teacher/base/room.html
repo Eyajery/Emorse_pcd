@@ -1,0 +1,107 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <section id="room-name-wrapper" style="color:white;">
+        <p style="color: #1b6fc3;">Course Name: <span id="room-name" ></span></p>
+    </section>
+
+    <section id="video-streams"></section>
+
+    <section id="controls-wrapper">
+        <div class="icon-wrapper">
+            <img class="control-icon" id="mic-btn" src="{% static 'images/microphone.svg' %}" />
+        </div>
+
+        <div class="icon-wrapper">
+            <img class="control-icon" id="camera-btn" src="{% static 'images/video.svg' %}" />
+        </div>
+
+        <div class="icon-wrapper">
+            <img class="control-icon" id="leave-btn" src="{% static 'images/leave.png' %}" />
+        </div>
+    </section>
+</main>
+
+
+<script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.8.0.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/streamtea.js' %}" ></script>
+<script>// Définit le temps en minutes pour envoyer la notification
+    var Happy = 1;
+    var Sad = 2;
+    var Angry = 3;
+    var Neutral= 4;
+    var Surprise= 5;
+    var Disgust= 6;
+    var Fear= 7;
+    
+    var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+    var sadCount = 0;
+    var AngryCount = 0;
+    var DisgustCount = 0;
+    var FearCount = 0;
+    var emotionsCount = [0, 0, 0, 0, 0, 0, 0];
+
+{% for d in data %}
+emotionsCount[{{ d.emotion }} - 1]++;
+{% endfor %}
+
+var totalEmotions = 0;
+for (var i = 0; i < emotionsCount.length; i++) {
+totalEmotions += emotionsCount[i];
+}
+   {% for d in data %}
+   if ({{ d.emotion }} === 2) {
+     sadCount++;
+} if ({{ d.emotion }} === 3) {
+  AngryCount++;
+} if ({{ d.emotion }} === 6) {
+FearCount++;
+}if ({{ d.emotion }} === 7) {
+DisgustCount++;
+}
+{% endfor %}
+
+var threshold = 50; // seuil de détection d'émotions négatives
+var negativeEmotions = sadCount + AngryCount + FearCount + DisgustCount;
+var percentNegative = Math.floor((negativeEmotions / totalEmotions) * 100);
+
+    const notificationTimeInMinutes = 1;
+    
+    // Convertit le temps en minutes en millisecondes
+    const notificationTimeInMilliseconds = notificationTimeInMinutes * 60 * 1000;
+    
+    function sendNotification() {
+        // Vérifie si la notification est prise en charge par le navigateur
+        if ("Notification" in window) {
+          // Demande la permission d'envoyer des notifications
+          Notification.requestPermission().then(function (permission) {
+            // Si l'utilisateur a donné la permission d'envoyer des notifications, envoie une notification
+            if (percentNegative >= threshold) {
+              var notification = new Notification("Cours en ligne", {
+                body: "The negative emotions of all students are at " + percentNegative + "%. Do you want to be redirected to recommendations?",
+              });
+      
+              // Ajoute un événement click à la notification pour rediriger l'utilisateur vers "/recommendations"
+              notification.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.open('/recommendationins', '_blank');
+              });
+            } else {
+             var notification= new Notification("Cours en ligne", {
+                body: "All emotions are positive!",
+              });
+              notification.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.open('/recommendationtpositive', '_blank');
+              });
+            }
+            
+          });
+        }
+      }
+      
+    // Appelle la fonction sendNotification à intervalles réguliers
+    setInterval(sendNotification, notificationTimeInMilliseconds);
+</script>
+{% endblock content %}

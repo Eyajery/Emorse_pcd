@@ -1,0 +1,169 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<div class="row mt-3 pt-3">
+    <div >
+       
+        {% if latest_etudiant %}
+          <h1>  Welcome {{ latest_etudiant }} ,Here is your statistic </h1>
+        
+        {% endif %}
+    </div>
+       
+    <div class="col-md-8">
+        <canvas id="myChart" width="300" height="200" ></canvas>
+        <script>
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var Happy = 1;
+          var Sad = 2;
+          var Angry = 3;
+          var Neutral= 4;
+          var Surprise= 5;
+          var Disgust= 6;
+          var Fear= 7;
+          
+          var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+          
+          var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: [{% for d in data %}'{{ d.detection_time|date:"H:i:s" }}',{% endfor %}],
+                  datasets: [{
+                      label: 'Emotions',
+                      data: [{% for d in data %}{{ d.emotion }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                      backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)',     
+                    ],
+    borderColor: [
+  
+      'rgb(75, 192, 192)',
+     
+    ],
+    borderWidth: 5
+                  }]
+              },
+          
+              options: {
+                scales: {
+                    yAxes: [{
+                        beginAtZero: true,
+                        
+                        ticks: {
+                            maxTicksLimit : 7,
+                            callback: function(value, index, ticks) {
+                               if(value == 1){
+                                return  'Happy';}
+                                else if(value == 2){
+                                    return  'Sad';
+                                }
+                                else if(value == 3){
+                                    return  'Angry';}
+                                else if(value == 4){
+                                      return  'Neutral';}
+                                else if(value == 5){
+                                        return  'Surprise';}
+                                else if(value == 6){
+                                          return  'Disgust';}
+                                else if(value == 7){
+                                            return  'Fear';}
+                                else return '';
+                            }
+                        }
+                    }]
+                }
+            }
+            });
+        </script>
+        <div id="myMessage">  
+    </div>
+   
+    <script> var Happy = 1;
+        var Sad = 2;
+        var Angry = 3;
+        var Neutral= 4;
+        var Surprise= 5;
+        var Disgust= 6;
+        var Fear= 7;
+        
+        var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+        var sadCount = 0;
+        var AngryCount = 0;
+        var DisgustCount = 0;
+        var FearCount = 0;
+        var emotionsCount = [0, 0, 0, 0, 0, 0, 0];
+    
+    {% for d in data %}
+    emotionsCount[{{ d.emotion }} - 1]++;
+    {% endfor %}
+    
+    var totalEmotions = 0;
+    for (var i = 0; i < emotionsCount.length; i++) {
+    totalEmotions += emotionsCount[i];
+    }
+       {% for d in data %}
+       if ({{ d.emotion }} === 2) {
+         sadCount++;
+    } if ({{ d.emotion }} === 3) {
+      AngryCount++;
+    } if ({{ d.emotion }} === 6) {
+    FearCount++;
+    }if ({{ d.emotion }} === 7) {
+    DisgustCount++;
+    }
+    {% endfor %}
+    var messageDiv = document.getElementById("myMessage");
+    var threshold = 50; // seuil de détection d'émotions négatives
+    var negativeEmotions = sadCount + AngryCount + FearCount + DisgustCount;
+    var percentNegative = Math.floor((negativeEmotions / totalEmotions) * 100);
+
+    if (percentNegative > threshold) {
+        var message = "The negative emotions of all students are at " + percentNegative + "%. Do you want to be redirected to recommendations?";
+        messageDiv.innerHTML = message;
+        messageDiv.style.background = "#f2dede";
+        messageDiv.style.border = "1px solid #ebccd1";
+        messageDiv.style.color = "#a94442";
+        messageDiv.style.padding = "10px";
+        messageDiv.style.borderRadius = "10px";
+        
+        var okButton = document.createElement("button");
+        okButton.innerHTML = "OK";
+        okButton.style.background = "#d9534f";
+        okButton.style.border = "1px solid #d43f3a";
+        okButton.style.color = "#fff";
+        okButton.style.padding = "5px 10px";
+        okButton.style.marginLeft = "20px";
+        okButton.style.borderRadius = "10px";
+        okButton.onclick = function() {
+            window.location.href = "/recommendations";
+        };
+        messageDiv.appendChild(okButton);
+
+       
+    }  else {
+        var message = "All emotions are positive!";
+  messageDiv.innerHTML = message;
+  messageDiv.style.background = "#dff0d8";
+  messageDiv.style.border = "1px solid #d6e9c6";
+  messageDiv.style.color = "#3c763d";
+  messageDiv.style.padding = "10px";
+  messageDiv.style.borderRadius = "10px";
+  messageDiv.style.fontWeight = "bold";
+  var okButton = document.createElement("button");
+  okButton.innerHTML = "OK";
+  okButton.style.background = "green";
+  okButton.style.border = "1px solid #d6e9c6";
+  okButton.style.color = "#fff";
+  okButton.style.padding = "5px 10px";
+  okButton.style.marginLeft = "20px";
+  okButton.style.borderRadius = "10px";
+  okButton.onclick = function() {
+      window.location.href = "/recommendationspositive";
+  };
+  messageDiv.appendChild(okButton);
+
+  
+}</script> 
+   
+</div>
+{% endblock %}

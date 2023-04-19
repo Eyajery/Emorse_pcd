@@ -1,0 +1,44 @@
+{% if negativeEmotionsData %}
+    <h3>Negative Emotions:</h3>
+    <ul>
+        {% for item in negativeEmotionsData %}
+            <li>{{ item.emotion }}: {{ item.count }}</li>
+        {% endfor %}
+    </ul>
+    <p>Percentage of negative emotions: {{ percentNegative }}%</p>
+{% endif %}
+
+<script>
+    function showNotification() {
+        // Personnaliser la notification avec la valeur de percentNegative
+        var percentNegative = "{{ percentNegative }}";
+        var notificationTitle = "Cours en ligne";
+        var notificationText = "";
+
+        if (percentNegative >= 50) {
+            notificationText = "Les émotions négatives de tous les étudiants sont à " + percentNegative + "%. Souhaitez-vous être redirigé vers des recommandations ?";
+        } else {
+            notificationText = "Les émotions négatives des étudiants sont à un niveau acceptable. Pas besoin de recommandations pour le moment.";
+        }
+
+        var notification = new Notification(notificationTitle, {
+            body: notificationText,
+        });
+
+        notification.addEventListener('click', function(event) {
+            event.preventDefault();
+            window.open('/recommendationins', '_blank');
+        });
+    }
+
+    // Demander la permission pour afficher des notifications
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
+
+    // Démarrer la première notification après 2 minutes
+    setTimeout(showNotification, 60000);
+
+    // Rafraîchir la page toutes les 5 minutes
+   
+</script>

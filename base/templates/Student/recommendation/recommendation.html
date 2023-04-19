@@ -1,0 +1,305 @@
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+<title>Emorse</title>
+{%include '../side bar/index.html'%}
+<style>
+  #formcontainer{
+    width: 500px;
+    box-shadow:var(--shaddow);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 5px;
+    position: fixed;
+    top:50%;
+    left:5%;
+    transform: translate(20%, -50%);
+}
+#formcontainer1{
+    width: 500px;
+   
+    box-shadow:var(--shaddow);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 5px;
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(20%, -50%);
+}
+
+
+  #welcome-message{
+      text-align: center;
+      margin-bottom: 10px;
+  }
+  
+  #welcome-message h1{
+      font-size: 30px;
+      animation: moveTitle 1s ease-in-out infinite alternate;
+      color: black;
+      
+    }
+    
+    @keyframes moveTitle {
+      from {
+        transform: translateX(0);
+        color: black;
+      }
+      to {
+        transform: translateX(10px);
+        color:  #1b6fc3;
+      }
+  }
+  
+  #logo{
+    display: block;
+    width: 100px;
+    margin: 0 auto;
+}
+body{
+   
+  
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+  height: 100vh;
+  width: 100vw;
+}
+    </style>
+    
+<body style="background-image: url({%static 'images/study.jpg' %});" >
+ 
+ 
+<main>
+  
+    <section id="formcontainer1">
+      <img id="logo" src="{% static 'images/logo.png' %}"/>
+       
+        <div id="welcome-message">
+            
+            <div style="font-family: Comic Sans MS, Comic Sans, cursive; ">
+                <p><h5  style=" color: rgb(97, 98, 105);" >Everything is okay for the lesson? Now it's time to do some exercises to make sure you that understood the lesson well. 
+                    Once you've completed the exercises, 
+                    don't forget to check the correction to verify your work!</h5></p>    
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleTD">
+           TD 
+            </button> 
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#corrTD">
+                Correction TD 
+                 </button> 
+                 <div style=" font-family: Comic Sans MS, Comic Sans, cursive; ">
+                  <p ><h5  style=" color: rgb(97, 98, 105);">
+                      Here are some helpful videos to  have fun!</h5></p>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo3">
+                        Video1
+                          </button> 
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo4">
+                              Video2
+                              </button> </br> </br>
+                              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo5">
+                           Video3
+                                </button> 
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo6">
+                                  Vidro4
+                                    </button>
+                              
+             </div>
+           </div>
+        </div>
+                    </br>
+                </section>
+                <section id="formcontainer">
+
+                  <img id="logo" src="{% static 'images/logo.png' %}"/>
+                    <div id="welcome-message">
+                        
+                        <div style=" font-family: Comic Sans MS, Comic Sans, cursive; ">
+                            <p ><h5  style=" color: rgb(97, 98, 105);">Dear {{ latest_etudiant }}, your statistics showed that you seemed tired or unmotivated during today's session, 
+                                I hope that everything is alright! If you missed any parts in the lesson or if you found any diffucilties understanding the algorithms. 
+                                Here are some helpful videos to help you understand the lesson better!</h5></p>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo">
+                                    Dijkstra algorithm
+                                    </button> </br></br>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo1">
+                                        Bellman algorithm
+                                        </button> </br> </br>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo2">
+                                          Matrice
+                                            </button>
+                       </div>
+                    </div>
+                             
+                               
+                              </section>
+    <!-- Video -->
+  <div class="modal fade" id="exampleVideo3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video1</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/z0Lm4ifwMx8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   <!-- Video -->
+   <div class="modal fade" id="exampleVideo4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video2</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/koTITe8KOvo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   <!-- Video -->
+   <div class="modal fade" id="exampleVideo5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video3 </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/ONHHSQx3Zbo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <!-- Video -->
+  <div class="modal fade" id="exampleVideo6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video4 </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/O_SsVfNfJBA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+    <!-- PDF -->
+    <div class="modal fade" id="exampleTD" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">TD Graphe</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <embed src="{% static 'pdf/TD GRAPHE.pdf' %}" type="application/pdf" width="100%" height="450px" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+       <!-- PDF -->
+    <div class="modal fade" id="corrTD" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Correction TD Graphe</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <embed src="{% static 'pdf/corr TD.pdf' %}" type="application/pdf" width="100%" height="450px" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+        <!-- Video -->
+  <div class="modal fade" id="exampleVideo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video Dijkstra algorithm</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/JPeCmKFrKio" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   <!-- Video -->
+   <div class="modal fade" id="exampleVideo1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video Bellman algorithm</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/Pn7rCyqwZbQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   <!-- Video -->
+   <div class="modal fade" id="exampleVideo2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Video Matrice </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <iframe width="100%" height="400" src="https://www.youtube.com/embed/u_PtF0C1sFI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+
+{% endblock content %}
+

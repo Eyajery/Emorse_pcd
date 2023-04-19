@@ -1,0 +1,47 @@
+
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+{%include '../side bar/index.html'%}
+<main>
+
+    <section id="form-container" >
+
+
+        <div id="welcome-message" style="margin-top: -50%;">
+            <h1>view your dashboard!</h1>
+         
+        </div>
+
+
+        <form id="form" >
+            <div class="form-field">
+                <input id="name-input" style="width:400px; margin-left: 10%;" placeholder="Enter your full name..." required />
+
+            </div>
+
+                <div class="form-field">
+                    <button style="width:400px; margin-left: 10%;"  required class="btn btn-primary" type="button" onclick="showDashboard()">view dashboard</button>
+                </div>
+               <!--<a href="{% url 'detect_emotion'%}">
+                    modele ia
+                  </a>--> 
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+    function showDashboard() {
+        let name = document.getElementById('name-input').value;
+        let url = `/dashboard_student/${name}`;
+        url = url.replace(/\s+/g, '-').toLowerCase();
+
+        window.open(url, '_self');
+    }
+</script>
+
+{% endblock content %}
+

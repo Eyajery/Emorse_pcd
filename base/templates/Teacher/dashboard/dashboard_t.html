@@ -1,0 +1,84 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+<div class="row mt-3 pt-3">
+    <div >
+       
+        {% if latest_etudiant %}
+          <h1>  Here is the static of your student {{ latest_etudiant }}  </h1>
+        
+        {% endif %}
+    </div>
+       
+    <div class="col-md-8">
+        <canvas id="myChart" width="300" height="200" ></canvas>
+        <script>
+          var ctx = document.getElementById('myChart').getContext('2d');
+          var Happy = 1;
+          var Sad = 2;
+          var Angry = 3;
+          var Neutral= 4;
+          var Surprise= 5;
+          var Disgust= 6;
+          var Fear= 7;
+          
+          var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+          
+          var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: [{% for d in data %}'{{ d.detection_time|date:"H:i:s" }}',{% endfor %}],
+                  datasets: [{
+                      label: 'Emotions',
+                      data: [{% for d in data %}{{ d.emotion }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                      backgroundColor: [
+                      'rgba(75, 192, 192, 0.2)',     
+                    ],
+    borderColor: [
+  
+      'rgb(75, 192, 192)',
+     
+    ],
+    borderWidth: 5
+                  }]
+              },
+          
+              options: {
+                scales: {
+                    yAxes: [{
+                        beginAtZero: true,
+                        
+                        ticks: {
+                            maxTicksLimit : 7,
+                            callback: function(value, index, ticks) {
+                               if(value == 1){
+                                return  'Happy';}
+                                else if(value == 2){
+                                    return  'Sad';
+                                }
+                                else if(value == 3){
+                                    return  'Angry';}
+                                else if(value == 4){
+                                      return  'Neutral';}
+                                else if(value == 5){
+                                        return  'Surprise';}
+                                else if(value == 6){
+                                          return  'Disgust';}
+                                else if(value == 7){
+                                            return  'Fear';}
+                                else return '';
+                            }
+                        }
+                    }]
+                }
+            }
+            });
+        </script>
+        
+    </div>
+   
+     
+   
+</div>
+{% endblock %}

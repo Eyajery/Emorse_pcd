@@ -1,0 +1,66 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+{%include '../side bar/index.html'%}
+<main>
+
+    <section id="form-container" >
+
+
+        <div id="welcome-message" style="margin-top: -50%;">
+            <h1>Start your course now!</h1>
+            <p>Your learning journey starts here!</p>
+        </div>
+
+
+        <form id="form" >
+            <div class="form-field">
+                <input name="name" style="width:400px; margin-left: 10%;" placeholder="Enter your full name..." required />
+
+            </div>
+
+                <div class="form-field">
+                    <input type="submit" value="Join Course" />
+                </div>
+               <!--<a href="{% url 'detect_emotion'%}">
+                    modele ia
+                  </a>--> 
+            </div>
+        </form>
+    </section>
+</main>
+
+<script>
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = "GRAPHE"
+        let name = e.target.name.value
+
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('name', name)
+        window.open('/detect-emotion/', '_self', 'Window 2');
+        window.open('/room_s/', '_self', 'Window 1');
+      
+       
+
+    }
+
+
+
+    form.addEventListener('submit', handleSubmit)
+</script>
+
+{% endblock content %}
+

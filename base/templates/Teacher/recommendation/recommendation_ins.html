@@ -1,0 +1,127 @@
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+<title>Emorse</title>
+{%include '../side bar/index.html'%}
+<style>
+    #formcontainer{
+        width: 500px;
+        box-shadow:var(--shaddow);
+        background-color: rgba(255, 255, 255, 0.7);
+        padding: 30px;
+        border-radius: 5px;
+        position: fixed;
+        top:50%;
+        left:5%;
+        transform: translate(80%, -50%);
+    }
+    #welcome-message{
+      text-align: center;
+      margin-bottom: 10px;
+  }
+  
+  #welcome-message h1{
+      font-size: 30px;
+      animation: moveTitle 1s ease-in-out infinite alternate;
+      color: black;
+      
+    }
+    
+    @keyframes moveTitle {
+      from {
+        transform: translateX(0);
+        color: black;
+      }
+      to {
+        transform: translateX(10px);
+        color:  #1b6fc3;
+      }
+  }
+  #logo{
+      display: block;
+      width: 100px;
+      margin: 0 auto;
+  }
+  body{
+   
+  
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    height: 100vh;
+    width: 100vw;
+  }
+      </style>
+      
+  <body style="background-image: url({%static 'images/study.jpg' %});" >
+   
+ 
+<main>
+  
+                <section id="formcontainer">
+
+                  <img id="logo" src="{% static 'images/logo.png' %}"/>
+                    <div id="welcome-message">
+                        
+                        <div style=" font-family: Comic Sans MS, Comic Sans, cursive; ">
+                            
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#examplePDF1">
+                                    Exercise of Dijkstra Algorithm
+                                        </button> </br> </br>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#examplePDF2">
+                                         Exercise of Bellman Algorithm
+                                            </button>
+                       </div>
+                    </div>
+                                </br>
+                            </section>
+   
+
+   
+  
+ 
+    <!-- PDF -->
+    <div class="modal fade" id="examplePDF1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Exemple1</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <embed src="{% static 'pdf/Exercice-Dijkstra.pdf' %}" type="application/pdf" width="100%" height="450px" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+       <!-- PDF -->
+    <div class="modal fade" id="examplePDF2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Exemple2</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <embed src="{% static 'pdf/Exercice-Bellman.pdf' %}" type="application/pdf" width="100%" height="450px" />
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+</main>
+
+</body>
+
+{% endblock content %}
+

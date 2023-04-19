@@ -1,0 +1,22 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+
+{%include '../side bar/index.html'%}
+<main>
+  
+    <section id="form-container">
+
+       
+        <div id="welcome-message">
+            
+            <h1>Welcome Student, <br> to Emorse <br/> an e-learning platform</h1>
+            <br/>
+            <p>Emorse: Emotional-Driven Recommender System in e-learning</p>
+        </div>
+    </section>
+</main>
+{% endblock content %}

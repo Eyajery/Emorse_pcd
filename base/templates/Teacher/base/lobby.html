@@ -1,0 +1,64 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %} 
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+{%include '../side bar/index.html'%}
+<main>
+
+    <section id="form-container">
+
+
+        <div id="welcome-message" style="margin-top: 1%; margin-bottom: 30px;">
+            <h1>Start your course now!</h1>
+        </div>
+
+
+        <form id="form">
+
+                <div class="form-field">
+                    <input type="submit" value="Join Course" />
+                </div>
+                <div class="form-field">
+                    <a href="mailto:{% for email in emails %}{{ email }};{% endfor %}?subject=Rappel cours graphe&body=Chers étudiants, Vous avez un cours de graphe avec Mr.Ali Lundi à 8h. Soyez à l'heure!">
+                        <button type="button" value="Invite Student"  style="width:200px; margin-left: 30%;"  required class="btn btn-primary" >Invite students</button>
+                     </a>
+                    
+                </div>
+                
+        </form>
+        
+    </section>
+</main>
+
+<script>
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = "GRAPHE"
+        let name = "Mr Ali"
+
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('name', name)
+        window.open('/detect-emotion/', '_self', 'Window 2');
+        window.open('/room_t/', '_self')
+    }
+
+
+
+    form.addEventListener('submit', handleSubmit)
+</script>
+
+{% endblock content %}
+
+
+

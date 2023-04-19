@@ -1,0 +1,51 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+
+{%include '../side bar/index.html'%}
+<main>
+  
+    <section id="form-container">
+
+       
+        <div id="welcome-message">
+            
+            <h1>Welcome Mr Ali, <br> to Emorse <br/> an e-learning platform</h1>
+            <br/>
+            <p>Emorse: Emotional-Driven Recommender System in e-learning</p>
+        </div>
+    </section>
+</main>
+
+<script>
+    let form = document.getElementById('form')
+
+    let handleSubmit = async (e) => {
+        e.preventDefault()
+        let room = "GRAPHE"
+        let name = "Mr Ali"
+
+        let response = await fetch(`/get_token/?channel=${room}`)
+        let data = await response.json()
+
+        let UID = data.uid
+        let token = data.token
+
+        sessionStorage.setItem('UID', UID)
+        sessionStorage.setItem('token', token)
+        sessionStorage.setItem('room', room)
+        sessionStorage.setItem('name', name)
+
+        window.open('/room/', '_self')
+    }
+
+
+
+    form.addEventListener('submit', handleSubmit)
+</script>
+
+{% endblock content %}
+

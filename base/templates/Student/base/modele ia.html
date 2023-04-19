@@ -1,0 +1,9 @@
+{% extends 'base/main.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'base/css/bootstrap.css' %}" />
+<script src="{% static 'base/js/bootstrap.js' %}"></script>
+
+    <h1>Emotion: {{ label }}</h1>
+  
+{% endblock content %}
