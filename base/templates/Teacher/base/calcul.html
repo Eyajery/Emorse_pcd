@@ -5,22 +5,34 @@
             <li>{{ item.emotion }}: {{ item.count }}</li>
         {% endfor %}
     </ul>
-    <p>Percentage of negative emotions: {{ percentNegative }}%</p>
+    <p id="percentNegative">Percentage of negative emotions: {{ percentNegative }}%</p>
 {% endif %}
 
-<script>
-    function showNotification() {
-        // Personnaliser la notification avec la valeur de percentNegative
-        var percentNegative = "{{ percentNegative }}";
-        var notificationTitle = "Cours en ligne";
-        var notificationText = "";
+{% for pdf_url in pdf_url %}
+{% if 'corr_TD' in pdf_url %}
+    <a href="{{ pdf_url }}">View the recommended material</a>
+  {% endif %}
+{% endfor %}
 
+
+<script>
+    var percentNegative = "{{ percentNegative }}";
+    var notificationTitle = "Cours en ligne";
+    var notificationText = "";
+
+    function updatePercentage() {
+        // Mettre à jour la valeur de percentNegative ici
+        percentNegative = Math.floor(Math.random() * 100);
+        document.getElementById("percentNegative").textContent = "Percentage of negative emotions: " + percentNegative + "%";
+
+        // Mettre à jour le texte de la notification
         if (percentNegative >= 50) {
             notificationText = "Les émotions négatives de tous les étudiants sont à " + percentNegative + "%. Souhaitez-vous être redirigé vers des recommandations ?";
-        } else {
-            notificationText = "Les émotions négatives des étudiants sont à un niveau acceptable. Pas besoin de recommandations pour le moment.";
         }
+    }
 
+    function showNotification() {
+        // Afficher la notification mise à jour
         var notification = new Notification(notificationTitle, {
             body: notificationText,
         });
@@ -36,9 +48,9 @@
         Notification.requestPermission();
     }
 
-    // Démarrer la première notification après 2 minutes
-    setTimeout(showNotification, 60000);
+    // Mettre à jour le pourcentage toutes les 2 minutes
+    setInterval(updatePercentage,8000);
 
-    // Rafraîchir la page toutes les 5 minutes
-   
+    // Afficher la notification mise à jour après 2 minutes
+    setTimeout(showNotification, 8000);
 </script>

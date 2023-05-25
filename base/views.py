@@ -4,7 +4,7 @@ import random
 from django.db.models import Count
 import time
 from agora_token_builder import RtcTokenBuilder
-from .models import RoomMember, Detection, Session,Etudiant
+from .models import RoomMember, Detection, Session,Etudiant,Recommendation
 import json
 from django.views.decorators.csrf import csrf_exempt
 import cv2
@@ -59,10 +59,12 @@ def room_s(request):
     return render(request, 'Student/base/room.html')
 def recommendation_s(request):
     latest_detection = Detection.objects.latest('detection_time')
+    recommendation = Recommendation.objects.all()
     detections = Detection.objects.filter(etudiant=latest_detection.etudiant).order_by('-detection_time')
     data = [{'emotion': d.emotion, 'detection_time': d.detection_time, 'etudiant': d.etudiant.nom} for d in detections]
     latest_etudiant = latest_detection.etudiant.nom if detections.exists() else None
-    context = {'data': data, 'latest_etudiant': latest_etudiant}
+    pdf_urls = [r.pdf.url for r in recommendation]
+    context = {'data': data, 'latest_etudiant': latest_etudiant,'pdf_url': pdf_urls}
     return render(request, 'Student/recommendation/recommendation.html',context)
 def recommendation_spositive(request):
     latest_detection = Detection.objects.latest('detection_time')
@@ -133,8 +135,10 @@ async def getToken(request):
     await asyncio.sleep(0.01)
     return JsonResponse({'token': token, 'uid': uid}, safe=False)
 def calcul(request):
-    detections = Detection.objects.all()
+    detections = Detection.objects.all() 
+    recommendation = Recommendation.objects.all()
     data = [{'emotion': d.emotion, 'detection_time': d.detection_time, 'etudiant': d.etudiant.nom} for d in detections]
+    pdf_urls = [r.pdf.url for r in recommendation]  
    
     etudiants = detections.order_by().values_list('etudiant__nom', flat=True).distinct()
     
@@ -169,8 +173,10 @@ def calcul(request):
                                {'emotion': 'disgust', 'count': disgustCount}]
     
     
-    context = {'data': data, 'etudiants': etudiants, 'percentNegative': percentNegative,
-               'negativeEmotionsData': negativeEmotionsData}
+    context = { 'data': data,
+    'etudiants': etudiants,
+    'percentNegative': percentNegative,
+    'negativeEmotionsData': negativeEmotionsData,'pdf_url': pdf_urls}
     return render(request, 'Teacher/base/calcul.html', context)
 
 
@@ -284,3 +290,5 @@ def emotion_detection(request):
                 break
 
     return render(request, 'Student/base/room.html')
+
+

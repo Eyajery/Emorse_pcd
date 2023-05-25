@@ -87,10 +87,16 @@ body{
                     don't forget to check the correction to verify your work!</h5></p>    
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleTD">
            TD 
-            </button> 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#corrTD">
-                Correction TD 
-                 </button> 
+            </button>
+            
+            {% for pdf_url in pdf_url %}
+{% if 'corr_TD' in pdf_url %}
+    <a href="{{ pdf_url }}"><button type="button" class="btn btn-primary" data-bs-toggle="modal" >
+      Correction TD 
+       </button> </a>
+  {% endif %}
+{% endfor %} 
+            
                  <div style=" font-family: Comic Sans MS, Comic Sans, cursive; ">
                   <p ><h5  style=" color: rgb(97, 98, 105);">
                       Here are some helpful videos to  have fun!</h5></p>
@@ -104,7 +110,7 @@ body{
                            Video3
                                 </button> 
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleVideo6">
-                                  Vidro4
+                                  Video4
                                     </button>
                               
              </div>

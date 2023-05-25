@@ -16,10 +16,10 @@
 
         <form id="form">
 
-                <div class="form-field">
-                    <input type="submit" value="Join Course" />
-                </div>
-                <div class="form-field">
+                <div class="form-group">
+                    <input type="submit" value="Join Course" class="btn btn-primary" style="width:200px; margin-left: 30%" />
+                </div></br>
+                <div class="form-group">
                     <a href="mailto:{% for email in emails %}{{ email }};{% endfor %}?subject=Rappel cours graphe&body=Chers étudiants, Vous avez un cours de graphe avec Mr.Ali Lundi à 8h. Soyez à l'heure!">
                         <button type="button" value="Invite Student"  style="width:200px; margin-left: 30%;"  required class="btn btn-primary" >Invite students</button>
                      </a>
@@ -27,7 +27,7 @@
                 </div>
                 
         </form>
-        
+      
     </section>
 </main>
 

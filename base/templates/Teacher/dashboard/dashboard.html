@@ -24,113 +24,90 @@
       color:  #1b6fc3;
     }
 }
-
+.input-group {
+    width: 2100px; 
+    height: 50px; 
+   
+}
 </style>
 <div class="row">
-    <div class="col-md-12"  style=" margin-top: 50px; font-family: Comic Sans MS, Comic Sans, cursive;">
-        <section id="form-container">
-
-       
-           
-        </section>
-        
-        
-          
-            
-       <form id="form">   
-        <div class="form-group">
-        
-            <div class="input-group">
-                <select  class="form-control" id="name-input" onchange="showDashboard()">
-                    <option value="" selected>Choose a student</option>
-                    {% for etudiant in etudiants %}
-                        <option value="{{ etudiant }}">{{ etudiant }}</option>
-                    {% endfor %}
-                </select>
+    <div class="col-md-12" style="margin-top: 50px; font-family: Comic Sans MS, Comic Sans, cursive;">
+        <form id="form">   
+            <div class="form-group">
+                <div class="input-group">
+                    <select class="form-control" id="name-input" onchange="showDashboard()" style="width: 50%">
+                        <option value="" selected>Choose a student</option>
+                        {% for etudiant in etudiants %}
+                            <option value="{{ etudiant }}">{{ etudiant }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
-        </div>
-      </div>
-     
-    </form>
-    <div class="col-md-6">
-        <table>
-            <tr>
-                <h1>All student statistics</h1>
-            </tr>
-           
-            <tr>
-                <td>
-                    <div class="row mt-3 pt-3">
-                        <div >
-                            <canvas id="myChart2" width="1500" height="1000"></canvas>
-                            <script>
-                                var ctx = document.getElementById('myChart2').getContext('2d');
-          var Happy = 1;
-          var Sad = 2;
-          var Angry = 3;
-          var Neutral= 4;
-          var Surprise= 5;
-          var Disgust= 6;
-          var Fear= 7;
-          
-          var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
-          
-          var myChart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                  labels: [{% for d in data %}'{{ d.detection_time|date:"H:i:s" }}',{% endfor %}],
-                  datasets: [{
-                      label: 'Emotions',
-                      data: [{% for d in data %}{{ d.emotion }}{% if not forloop.last %},{% endif %}{% endfor %}],
-                      fill: false,
-                      borderColor: 'rgb(75, 192, 192)',
-                      tension: 0.1
-                  
-                  }]
-              },
-          
-              options: {
-                scales: {
-                    yAxes: [{
-                        beginAtZero: true,
-                        
-                        ticks: {
-                            maxTicksLimit : 7,
-                            callback: function(value, index, ticks) {
-                               if(value == 1){
-                                return  'Happy';}
-                                else if(value == 2){
-                                    return  'Sad';
-                                }
-                                else if(value == 3){
-                                    return  'Angry';}
-                                else if(value == 4){
-                                      return  'Neutral';}
-                                else if(value == 5){
-                                        return  'Surprise';}
-                                else if(value == 6){
-                                          return  'Disgust';}
-                                else if(value == 7){
-                                            return  'Fear';}
-                                else return '';
-                            }
-                        }
-                    }]
-                }
-            }
-            });
-                            </script>
-                        </div>
-                    </div>
-                </td>
-              
-            </tr>
-            
-        </table>
-        <div id="myMessage">
+        </form>
     </div>
-    
-      
+    <div class="col-md-12" style="text-align: center;">
+        <h1>All students statistics</h1>
+        <canvas id="myChart2" width="2000" height="800"></canvas>
+        <script>
+            var ctx = document.getElementById('myChart2').getContext('2d');
+            var Happy = 1;
+            var Sad = 2;
+            var Angry = 3;
+            var Neutral= 4;
+            var Surprise= 5;
+            var Disgust= 6;
+            var Fear= 7;
+
+            var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [{% for d in data %}'{{ d.detection_time|date:"H:i:s" }}',{% endfor %}],
+                    datasets: [{
+                        label: 'Emotions',
+                        data: [{% for d in data %}{{ d.emotion }}{% if not forloop.last %},{% endif %}{% endfor %}],
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        yAxes: [{
+                            beginAtZero: true,
+
+                            ticks: {
+                                maxTicksLimit : 7,
+                                callback: function(value, index, ticks) {
+                                   if(value == 1){
+                                    return  'Happy';}
+                                    else if(value == 2){
+                                        return  'Sad';
+                                    }
+                                    else if(value == 3){
+                                        return  'Angry';}
+                                    else if(value == 4){
+                                          return  'Neutral';}
+                                    else if(value == 5){
+                                            return  'Surprise';}
+                                    else if(value == 6){
+                                          return  'Disgust';}
+                                    else if(value == 7){
+                                            return  'Fear';}
+                                    else return '';
+                                }
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
+    </div>
+    <div id="myMessage"></div>
+</div>
 
 
 
@@ -184,7 +161,7 @@
         messageDiv.style.borderRadius = "10px";
         
         var okButton = document.createElement("button");
-        okButton.innerHTML = "OK";
+        okButton.innerHTML = "View recommendations";
         okButton.style.background = "#d9534f";
         okButton.style.border = "1px solid #d43f3a";
         okButton.style.color = "#fff";
@@ -192,7 +169,7 @@
         okButton.style.marginLeft = "20px";
         okButton.style.borderRadius = "10px";
         okButton.onclick = function() {
-            window.location.href = "/recommendationt";
+            window.open("/recommendationt", "_blank");
         };
         messageDiv.appendChild(okButton);
 
@@ -207,7 +184,7 @@
   messageDiv.style.borderRadius = "10px";
   messageDiv.style.fontWeight = "bold";
   var okButton = document.createElement("button");
-  okButton.innerHTML = "OK";
+  okButton.innerHTML = "View recommendations";
   okButton.style.background = "green";
   okButton.style.border = "1px solid #d6e9c6";
   okButton.style.color = "#fff";
@@ -215,7 +192,8 @@
   okButton.style.marginLeft = "20px";
   okButton.style.borderRadius = "10px";
   okButton.onclick = function() {
-      window.location.href = "/recommendationtpositive";
+    window.open("/recommendationtpositive", "_blank");
+      
   };
   messageDiv.appendChild(okButton);
 
@@ -237,7 +215,7 @@
             let url = `/dashboard_teacher/${name}`;
             url = url.replace(/\s+/g, '-').toLowerCase();
     
-            window.open(url, '_self');
+            window.open(url, '_blank');
         }
     </script>
         

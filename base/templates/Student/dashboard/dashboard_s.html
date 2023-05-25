@@ -6,7 +6,7 @@
     <div >
        
         {% if latest_etudiant %}
-          <h1>  Welcome {{ latest_etudiant }} ,Here is your statistic </h1>
+          <h1>  Welcome {{ latest_etudiant }} ,Here is your statistics </h1>
         
         {% endif %}
     </div>
@@ -118,7 +118,7 @@
     var percentNegative = Math.floor((negativeEmotions / totalEmotions) * 100);
 
     if (percentNegative > threshold) {
-        var message = "The negative emotions of all students are at " + percentNegative + "%. Do you want to be redirected to recommendations?";
+        var message = "Your negative emotions  are at " + percentNegative + "%. Do you want to be redirected to recommendations?";
         messageDiv.innerHTML = message;
         messageDiv.style.background = "#f2dede";
         messageDiv.style.border = "1px solid #ebccd1";
@@ -127,7 +127,7 @@
         messageDiv.style.borderRadius = "10px";
         
         var okButton = document.createElement("button");
-        okButton.innerHTML = "OK";
+        okButton.innerHTML = "View recommendations";
         okButton.style.background = "#d9534f";
         okButton.style.border = "1px solid #d43f3a";
         okButton.style.color = "#fff";
@@ -135,7 +135,8 @@
         okButton.style.marginLeft = "20px";
         okButton.style.borderRadius = "10px";
         okButton.onclick = function() {
-            window.location.href = "/recommendations";
+            window.open("/recommendations", "_blank");
+           
         };
         messageDiv.appendChild(okButton);
 
@@ -150,7 +151,7 @@
   messageDiv.style.borderRadius = "10px";
   messageDiv.style.fontWeight = "bold";
   var okButton = document.createElement("button");
-  okButton.innerHTML = "OK";
+  okButton.innerHTML = "View recommendations";
   okButton.style.background = "green";
   okButton.style.border = "1px solid #d6e9c6";
   okButton.style.color = "#fff";
@@ -158,7 +159,8 @@
   okButton.style.marginLeft = "20px";
   okButton.style.borderRadius = "10px";
   okButton.onclick = function() {
-      window.location.href = "/recommendationspositive";
+    window.open("/recommendationspositive", "_blank");
+      
   };
   messageDiv.appendChild(okButton);
 

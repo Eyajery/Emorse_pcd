@@ -45,5 +45,13 @@ class Detection(models.Model):
 
     def __str__(self):
         return f'{self.emotion}, {self.detection_time},{self.etudiant.nom}'
-    
+
+
+class Recommendation(models.Model):
+    nom = models.CharField(max_length=200)
+    pdf = models.FileField(upload_to='pdf/', default='pdf/chapitre_3.pdf')
+
+    def __str__(self):
+        return self.nom
+  
     

@@ -75,10 +75,77 @@
             }
             });
         </script>
-        
+        <div id="myMessage"></div> 
     </div>
    
-     
+  
    
 </div>
+
+<script>
+    var Happy = 1;
+    var Sad = 2;
+    var Angry = 3;
+    var Neutral= 4;
+    var Surprise= 5;
+    var Disgust= 6;
+    var Fear= 7;
+    
+    var emotions = ['Happy', 'Sad', 'Angry', 'Neutral', 'Surprise', 'Disgust', 'Fear'];
+    var sadCount = 0;
+    var AngryCount = 0;
+    var DisgustCount = 0;
+    var FearCount = 0;
+    var emotionsCount = [0, 0, 0, 0, 0, 0, 0];
+
+{% for d in data %}
+emotionsCount[{{ d.emotion }} - 1]++;
+{% endfor %}
+
+var totalEmotions = 0;
+for (var i = 0; i < emotionsCount.length; i++) {
+totalEmotions += emotionsCount[i];
+}
+   {% for d in data %}
+   if ({{ d.emotion }} === 2) {
+     sadCount++;
+} if ({{ d.emotion }} === 3) {
+  AngryCount++;
+} if ({{ d.emotion }} === 6) {
+FearCount++;
+}if ({{ d.emotion }} === 7) {
+DisgustCount++;
+}
+{% endfor %}
+var messageDiv = document.getElementById("myMessage");
+var threshold = 50; // seuil de détection d'émotions négatives
+var negativeEmotions = sadCount + AngryCount + FearCount + DisgustCount;
+var percentNegative = Math.floor((negativeEmotions / totalEmotions) * 100);
+
+if (percentNegative > threshold) {
+    var message = "The negative emotions of this student are at " + percentNegative + "%.                         ";
+    messageDiv.innerHTML = message;
+    messageDiv.style.background = "#f2dede";
+    messageDiv.style.border = "1px solid #ebccd1";
+    messageDiv.style.color = "#a94442";
+    messageDiv.style.padding = "10px";
+    messageDiv.style.borderRadius = "10px";
+    
+   
+
+   
+}  else {
+    var message = "All emotions are positive!";
+messageDiv.innerHTML = message;
+messageDiv.style.background = "#dff0d8";
+messageDiv.style.border = "1px solid #d6e9c6";
+messageDiv.style.color = "#3c763d";
+messageDiv.style.padding = "10px";
+messageDiv.style.borderRadius = "10px";
+messageDiv.style.fontWeight = "bold";
+
+
+}
+
+</script>
 {% endblock %}
